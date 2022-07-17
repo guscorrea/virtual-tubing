@@ -51,13 +51,13 @@ public class TemperatureRepository {
 	}
 
 	public List<Temperature> findAllByTubingId(UUID tubingId) {
-		final ResultSet result = session.execute(select().all().from(TABLE).where(eq("tubing_id", tubingId)));
+		final ResultSet result = session.execute(select().all().from(TABLE).where(eq("component_id", tubingId)));
 		return mapper.map(result).all();
 	}
 
 	public List<Temperature> findAllByTubingIdAndDateTime(UUID tubingId, String startDateTime, String endDateTime) {
 		final ResultSet result = session.execute(
-				select().all().from(TABLE).where(eq("tubing_id", tubingId))
+				select().all().from(TABLE).where(eq("component_id", tubingId))
 						.and(gte("timestamp", LocalDateTime.parse(startDateTime)))
 						.and(lte("timestamp", LocalDateTime.parse(endDateTime))));
 		return mapper.map(result).all();
