@@ -37,6 +37,7 @@ public class PdgRepository {
 				SchemaBuilder.createTable(TABLE)
 						.ifNotExists()
 						.addPartitionKey("pdg_id", uuid())
+						.addColumn("tubing_id", uuid())
 						.addColumn("name", text())
 						.addColumn("pdg_info", text())
 						.addColumn("creation_date_time", timestamp()));

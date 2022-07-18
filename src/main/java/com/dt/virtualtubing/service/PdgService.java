@@ -52,6 +52,7 @@ public class PdgService {
 		System.out.println("Creating Pdg with name " + pdgRequest.getName());
 		Pdg pdg = Pdg.builder()
 				.pdgId(UUID.randomUUID())
+				.tubingId(tubingId)
 				.name(pdgRequest.getName())
 				.pdgInfo(pdgRequest.getPdgInfo())
 				.creationDateTime(LocalDateTime.now())
@@ -71,7 +72,9 @@ public class PdgService {
 
 	public void deletePdg(UUID id) {
 		System.out.println("Deleting pdg with id " + id);
-		pdgRepository.delete(id);
+		Pdg pdg = getPdg(id);
+		tubingService.removePdgFromTubing(pdg.getTubingId(), pdg.getPdgId());
+		pdgRepository.delete(pdg.getPdgId());
 		removeDefaultTopics(id);
 	}
 

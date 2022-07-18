@@ -22,6 +22,9 @@ public class Pdg {
 	private UUID pdgId;
 
 	@Column
+	private UUID tubingId;
+
+	@Column
 	private String name;
 
 	@Column

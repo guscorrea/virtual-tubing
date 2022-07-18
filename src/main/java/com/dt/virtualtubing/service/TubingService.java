@@ -2,9 +2,7 @@ package com.dt.virtualtubing.service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -81,6 +79,16 @@ public class TubingService {
 			return;
 		}
 		tubing.getPdgIdList().add(pdgId);
+		tubingRepository.save(tubing);
+	}
+
+	public void removePdgFromTubing(UUID tubingId, UUID pdgId) {
+		System.out.println("Removing pdg " + pdgId.toString() + " from Tubing with id: " + tubingId.toString());
+		Tubing tubing = tubingRepository.find(tubingId);
+		if (Objects.isNull(tubing)) {
+			return;
+		}
+		tubing.getPdgIdList().remove(pdgId);
 		tubingRepository.save(tubing);
 	}
 

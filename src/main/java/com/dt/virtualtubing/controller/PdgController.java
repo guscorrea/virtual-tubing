@@ -55,7 +55,7 @@ public class PdgController {
 	}
 
 	@DeleteMapping("/pdg/{id}")
-	public ResponseEntity<Void> createPdg(@PathVariable("id") UUID id) {
+	public ResponseEntity<Void> deletePdg(@PathVariable("id") UUID id) {
 		pdgService.deletePdg(id);
 		return ResponseEntity.noContent().build();
 	}
