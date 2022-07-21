@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.dt</groupId>
 	<artifactId>virtual-tubing</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>virtual-tubing</name>
 	<description>Digital twin virtual tubing</description>
 	<properties>

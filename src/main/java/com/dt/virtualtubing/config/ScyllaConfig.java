@@ -25,12 +25,9 @@ import com.datastax.driver.mapping.PropertyMapper;
 public class ScyllaConfig {
 
 	@Bean
-	public Cluster cluster() {
-		Cluster cluster = Cluster.builder().addContactPointsWithPorts(
-						new InetSocketAddress("127.0.0.1", 9042),
-						new InetSocketAddress("127.0.0.1", 9043),
-						new InetSocketAddress("127.0.0.1", 9044))
-				.build();
+	public Cluster cluster(@Value("${SCYLLA_NODE1_URL}") String node1, @Value("${SCYLLA_NODE1_URL}") String node2,
+			@Value("${SCYLLA_NODE1_URL}") String node3) {
+		Cluster cluster = Cluster.builder().addContactPoints(node1, node2, node3).build();
 		cluster.getConfiguration().getCodecRegistry().register(LocalDateTimeCodec.instance);
 		return cluster;
 	}
