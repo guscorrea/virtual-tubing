@@ -30,31 +30,31 @@ public class TubingController {
 		this.tubingService = tubingService;
 	}
 
-	@GetMapping("/tubing")
+	@GetMapping("/v1/tubing")
 	public ResponseEntity<List<Tubing>> listTubing() {
 		List<Tubing> tubingList = tubingService.getAllTubings();
 		return new ResponseEntity<>(tubingList, HttpStatus.OK);
 	}
 
-	@GetMapping("/tubing/{id}")
+	@GetMapping("/v1/tubing/{id}")
 	public ResponseEntity<Tubing> getTubing(@PathVariable("id") UUID id) {
 		Tubing tubing = tubingService.getTubing(id);
 		return new ResponseEntity<>(tubing, HttpStatus.OK);
 	}
 
-	@PostMapping("/tubing")
+	@PostMapping("/v1/tubing")
 	public ResponseEntity<Tubing> createTubing(@RequestBody @Valid TubingRequest tubingRequest) {
 		Tubing tubing = tubingService.saveTubing(tubingRequest);
 		return new ResponseEntity<>(tubing, HttpStatus.OK);
 	}
 
-	@PutMapping("/tubing/{id}")
+	@PutMapping("/v1/tubing/{id}")
 	public ResponseEntity<Tubing> updateTubing(@PathVariable("id") UUID id, @RequestBody @Valid TubingRequest tubingRequest) {
 		Tubing updatedTubing = tubingService.updateTubing(id, tubingRequest);
 		return new ResponseEntity<>(updatedTubing, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/tubing/{id}")
+	@DeleteMapping("/v1/tubing/{id}")
 	public ResponseEntity<Void> createTubing(@PathVariable("id") UUID id) {
 		tubingService.deleteTubing(id);
 		return ResponseEntity.noContent().build();

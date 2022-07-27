@@ -25,12 +25,12 @@ public class TemperatureController {
 		this.temperatureRepository = temperatureRepository;
 	}
 
-	@GetMapping("/temperature")
+	@GetMapping("/v1/temperature")
 	public ResponseEntity<List<Temperature>> listTemperature() {
 		return new ResponseEntity<>(temperatureRepository.findAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/temperature/{id}")
+	@GetMapping("/v1/temperature/{id}")
 	public ResponseEntity<List<Temperature>> getTemperature(@PathVariable("id") String id, @RequestParam(required = false) String startDateTime,
 			@RequestParam(required = false) String endDateTime) {
 		if (areDateFiltersInformed(startDateTime, endDateTime)) {

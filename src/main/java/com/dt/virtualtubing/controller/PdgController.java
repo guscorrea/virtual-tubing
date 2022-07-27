@@ -30,31 +30,31 @@ public class PdgController {
 		this.pdgService = pdgService;
 	}
 
-	@GetMapping("/pdg")
+	@GetMapping("/v1/pdg")
 	public ResponseEntity<List<Pdg>> listPdg() {
 		List<Pdg> pdgList = pdgService.getAllPdgs();
 		return new ResponseEntity<>(pdgList, HttpStatus.OK);
 	}
 
-	@GetMapping("/pdg/{id}")
+	@GetMapping("/v1/pdg/{id}")
 	public ResponseEntity<Pdg> getPdg(@PathVariable("id") UUID id) {
 		Pdg pdg = pdgService.getPdg(id);
 		return new ResponseEntity<>(pdg, HttpStatus.OK);
 	}
 
-	@PostMapping("/pdg/{id}")
+	@PostMapping("/v1/pdg/{id}")
 	public ResponseEntity<Pdg> createPdg(@PathVariable("id") UUID tubingId, @RequestBody @Valid PdgRequest pdgRequest) {
 		Pdg pdg = pdgService.savePdg(tubingId, pdgRequest);
 		return new ResponseEntity<>(pdg, HttpStatus.OK);
 	}
 
-	@PutMapping("/pdg/{id}")
+	@PutMapping("/v1/pdg/{id}")
 	public ResponseEntity<Pdg> updatePdg(@PathVariable("id") UUID id, @RequestBody @Valid PdgRequest pdgRequest) {
 		Pdg updatedPdg = pdgService.updatePdg(id, pdgRequest);
 		return new ResponseEntity<>(updatedPdg, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/pdg/{id}")
+	@DeleteMapping("/v1/pdg/{id}")
 	public ResponseEntity<Void> deletePdg(@PathVariable("id") UUID id) {
 		pdgService.deletePdg(id);
 		return ResponseEntity.noContent().build();

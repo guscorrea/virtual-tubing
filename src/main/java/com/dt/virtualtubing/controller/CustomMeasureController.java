@@ -25,17 +25,17 @@ public class CustomMeasureController {
 		this.customMeasureRepository = customMeasureRepository;
 	}
 
-	@GetMapping("/measure")
+	@GetMapping("/v1/measure")
 	public ResponseEntity<List<CustomMeasure>> listMeasures() {
 		return new ResponseEntity<>(customMeasureRepository.findAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/measure/{id}")
+	@GetMapping("/v1/measure/{id}")
 	public ResponseEntity<List<CustomMeasure>> getMeasure(@PathVariable("id") String id) {
 		return new ResponseEntity<>(customMeasureRepository.findAllByTubing(UUID.fromString(id)), HttpStatus.OK);
 	}
 
-	@GetMapping("/measure/{id}/property/{propertyName}")
+	@GetMapping("/v1/measure/{id}/property/{propertyName}")
 	public ResponseEntity<List<CustomMeasure>> getMeasureByProperty(@PathVariable("id") String id, @PathVariable("propertyName") String propertyName,
 			@RequestParam(required = false) String startDateTime, @RequestParam(required = false) String endDateTime) {
 		if (areDateFiltersInformed(startDateTime, endDateTime)) {

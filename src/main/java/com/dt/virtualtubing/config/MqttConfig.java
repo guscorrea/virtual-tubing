@@ -49,8 +49,8 @@ public class MqttConfig {
 		options.setServerURIs(new String[] { url });
 		options.setUserName(username);
 		options.setPassword(password.toCharArray());
-		options.setCleanSession(true);
-		options.setMaxInflight(1000);
+		options.setCleanSession(false);
+		options.setMaxInflight(2000);
 		factory.setConnectionOptions(options);
 		return factory;
 	}
@@ -65,7 +65,7 @@ public class MqttConfig {
 		adapter = new MqttPahoMessageDrivenChannelAdapter(clientId, mqttClientFactory(),
 				"tubing.test.temperature", "tubing.test.pressure");
 		adapter.setCompletionTimeout(5000);
-		adapter.setConverter(new DefaultPahoMessageConverter());
+		adapter.setConverter(new DefaultPahoMessageConverter(qos, false));
 		adapter.setQos(qos);
 		adapter.setOutputChannel(tubingInputChannel());
 		return adapter;

@@ -25,12 +25,12 @@ public class PressureController {
 		this.pressureRepository = pressureRepository;
 	}
 
-	@GetMapping("/pressure")
+	@GetMapping("/v1/pressure")
 	public ResponseEntity<List<Pressure>> listPressure() {
 		return new ResponseEntity<>(pressureRepository.findAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/pressure/{id}")
+	@GetMapping("/v1/pressure/{id}")
 	public ResponseEntity<List<Pressure>> getPressure(@PathVariable("id") String id, @RequestParam(required = false) String startDateTime,
 			@RequestParam(required = false) String endDateTime) {
 		if (areDateFiltersInformed(startDateTime, endDateTime)) {
