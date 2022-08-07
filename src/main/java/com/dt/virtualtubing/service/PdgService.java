@@ -18,8 +18,10 @@ import com.dt.virtualtubing.model.PdgRequest;
 import com.dt.virtualtubing.persistence.PdgRepository;
 import com.dt.virtualtubing.persistence.entity.Pdg;
 import com.dt.virtualtubing.persistence.entity.Tubing;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class PdgService {
 
 	@Resource
@@ -42,6 +44,7 @@ public class PdgService {
 	public Pdg getPdg(UUID id) {
 		Pdg pdg = pdgRepository.find(id);
 		if (Objects.isNull(pdg)) {
+			log.error("Pdg with id {] not found in the DB.", id);
 			throw new PdgNotFoundException("Pdg with id " + id.toString() + " not found in the database.");
 		}
 		return pdg;
@@ -49,7 +52,7 @@ public class PdgService {
 
 	public Pdg savePdg(UUID tubingId, PdgRequest pdgRequest) {
 		Tubing tubing = tubingService.getTubing(tubingId);
-		System.out.println("Creating Pdg with name " + pdgRequest.getName());
+		log.info("Creating Pdg with name {}", pdgRequest.getName());
 		Pdg pdg = Pdg.builder()
 				.pdgId(UUID.randomUUID())
 				.tubingId(tubingId)
@@ -64,14 +67,14 @@ public class PdgService {
 
 	public Pdg updatePdg(UUID id, PdgRequest pdgRequest) {
 		Pdg pdg = getPdg(id);
-		System.out.println("Updating pdg with id " + id);
+		log.info("Updating pdg with id {}", id);
 		pdg.setName(pdgRequest.getName());
 		pdg.setPdgInfo(StringUtils.defaultIfEmpty(pdgRequest.getPdgInfo(), pdg.getPdgInfo()));
 		return pdgRepository.save(pdg);
 	}
 
 	public void deletePdg(UUID id) {
-		System.out.println("Deleting pdg with id " + id);
+		log.info("Deleting pdg with id {}", id);
 		Pdg pdg = getPdg(id);
 		tubingService.removePdgFromTubing(pdg.getTubingId(), pdg.getPdgId());
 		pdgRepository.delete(pdg.getPdgId());
@@ -82,21 +85,22 @@ public class PdgService {
 		ComponentTopics newComponentTopics = new ComponentTopics(pdg.getPdgId().toString());
 
 		String temperatureTopic = newComponentTopics.getTemperatureTopicName();
-		System.out.println("Adding new topic: " + temperatureTopic);
+		log.info("Adding new topic: {}", temperatureTopic);
 		mqttConfig.adapter.addTopic(temperatureTopic, 2);
 
 		String pressureTopic = newComponentTopics.getPressureTopicName();
-		System.out.println("Adding new topic: " + pressureTopic);
+		log.info("Adding new topic: {}", pressureTopic);
 		mqttConfig.adapter.addTopic(pressureTopic, 2);
 
 		String customTopic = newComponentTopics.getCustomTopicName();
-		System.out.println("Adding new topic: " + customTopic);
+		log.info("Adding new topic: {}", customTopic);
 		mqttConfig.adapter.addTopic(customTopic, 2);
 
 	}
 
 	private void removeDefaultTopics(UUID id) {
 		ComponentTopics componentTopics = new ComponentTopics(id.toString());
+		log.info("Removing default topics for: {}", id);
 		mqttConfig.adapter.removeTopic(componentTopics.getTemperatureTopicName(),
 				componentTopics.getPressureTopicName(),
 				componentTopics.getCustomTopicName());

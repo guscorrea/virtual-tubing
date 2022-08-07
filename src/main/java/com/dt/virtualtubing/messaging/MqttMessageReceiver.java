@@ -17,8 +17,10 @@ import com.dt.virtualtubing.persistence.entity.Temperature;
 import com.dt.virtualtubing.utils.TopicDataExtractor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class MqttMessageReceiver implements MessageHandler {
 
 	private final ObjectMapper objectMapper;
@@ -47,8 +49,7 @@ public class MqttMessageReceiver implements MessageHandler {
 			String topic = message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC).toString();
 			MqttRequest mqttRequest = objectMapper.readValue(message.getPayload().toString(), MqttRequest.class);
 			mqttRequest.setMqttTopicData(topicDataExtractor.getData(topic));
-			System.out.println("Message consumed from " + topic + " with LocalDateTime: " + mqttRequest.getTimeStamp() + " and value: "
-					+ mqttRequest.getValue());
+			log.info("Message consumed from {}  with LocalDateTime: {} and value: {}", topic, mqttRequest.getTimeStamp(), mqttRequest.getValue());
 
 			switch (mqttRequest.getMqttTopicData().getMeasurementType()) {
 			case temperature:
@@ -62,7 +63,7 @@ public class MqttMessageReceiver implements MessageHandler {
 			}
 		}
 		catch (JsonProcessingException | IllegalArgumentException e) {
-			System.out.println("Error deserializing Mqtt Request " + message.getPayload());
+			log.error("Error deserializing Mqtt Request {}", message.getPayload());
 		}
 	}
 
