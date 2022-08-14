@@ -44,7 +44,7 @@ public class PdgService {
 	public Pdg getPdg(UUID id) {
 		Pdg pdg = pdgRepository.find(id);
 		if (Objects.isNull(pdg)) {
-			log.error("Pdg with id {] not found in the DB.", id);
+			log.error("Pdg with id {} not found in the DB.", id);
 			throw new PdgNotFoundException("Pdg with id " + id.toString() + " not found in the database.");
 		}
 		return pdg;

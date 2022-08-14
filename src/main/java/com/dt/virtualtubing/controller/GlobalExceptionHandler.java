@@ -1,5 +1,6 @@
 package com.dt.virtualtubing.controller;
 
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,7 +25,10 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(toListMessages(e.getMessage()), HttpStatus.NOT_FOUND);
 	}
 
-	//TODO add one for DateTimeParseException
+	@ExceptionHandler(DateTimeParseException.class)
+	public ResponseEntity<List<String>> handleDateTimeParseException(DateTimeParseException e) {
+		return new ResponseEntity<>(toListMessages(e.getMessage()), HttpStatus.BAD_REQUEST);
+	}
 
 	private List<String> toListMessages(String message) {
 		return Collections.singletonList(message);

@@ -41,7 +41,7 @@ public class TubingService {
 	public Tubing getTubing(UUID id) {
 		Tubing tubing = tubingRepository.find(id);
 		if (Objects.isNull(tubing)) {
-			log.error("Tubing with id {] not found in the DB.", id);
+			log.error("Tubing with id {} not found in the DB.", id);
 			throw new TubingNotFoundException("Tubing with id " + id.toString() + " not found in the database.");
 		}
 		return tubing;
