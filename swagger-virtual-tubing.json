@@ -1,0 +1,979 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "Virtual Tubing",
+		"description": "The virtual tubing microservice models the inner and external tubes of the oil well production column. The tubing is responsible for transporting oil and gas from deep in the well to the surface.",
+		"version": "1.0.0"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:8085",
+			"description": "Local Docker deployment URL"
+		}
+	],
+	"paths": {
+		"/v1/tubing/{id}": {
+			"get": {
+				"tags": [
+					"Tubing"
+				],
+				"summary": "Retrieves a Tubing",
+				"description": "Retrieves a Tubing resource with a given UUID.",
+				"operationId": "getTubing",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The Tubing was retrieved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Tubing"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "The request failed validation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Invalid UUID string"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "The Tubing was not found in the DB.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Tubing with id c5f2f64c-b02d-4635-8a34-c3d4cc2d955b not found in the database."
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"Tubing"
+				],
+				"summary": "Updates a Tubing resource",
+				"description": "Sends a put request, validates input data, checks if the current resource exists, and saves the updated resource into the Scylla database.",
+				"operationId": "updateTubing",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TubingRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Tubing resource was updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Tubing"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "The request failed validation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Field name: must not be null"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "The Tubing was not found in the DB.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Tubing with id c5f2f64c-b02d-4635-8a34-c3d4cc2d955b not found in the database."
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Unexpected error occurred",
+						"content": {
+							"application/json": {}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Tubing"
+				],
+				"summary": "Deletes a Tubing resource",
+				"description": "Deletes a Tubing resource with given UUID.",
+				"operationId": "createTubing_1",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "The Tubing was deleted."
+					}
+				}
+			}
+		},
+		"/v1/pdg/{id}": {
+			"get": {
+				"tags": [
+					"PDG"
+				],
+				"summary": "Retrieves a PDG.",
+				"description": "Retrieves a PDG resource with a given UUID.",
+				"operationId": "getPdg",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The PDG was retrieved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Pdg"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "The request failed validation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Invalid UUID string"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "The PDG was not found in the DB.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Pdg with id c5f2f64c-b02d-4635-8a34-c3d4cc2d955b not found in the database."
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"PDG"
+				],
+				"summary": "Updates a PDG resource",
+				"description": "Sends a put request, validates input data, checks if the current resource exists, and saves the updated resource into the Scylla database.",
+				"operationId": "updatePdg",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PdgRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "PDG resource was updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Pdg"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "The request failed validation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Field name: must not be null"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "The PDG was not found in the DB.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Pdg with id c5f2f64c-b02d-4635-8a34-c3d4cc2d955b not found in the database."
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Unexpected error occurred",
+						"content": {
+							"application/json": {}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"PDG"
+				],
+				"summary": "Creates a PDG resource",
+				"description": "Sends a post request, validates input data, and saves the generated resource into the Scylla database. Requires an existent tubing to be processed.",
+				"operationId": "createPdg",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PdgRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "PDG resource was created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Pdg"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "The request failed validation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Field name: must not be null"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "The PDG was not found in the DB.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Tubing with id c5f2f64c-b02d-4635-8a34-c3d4cc2d955b not found in the database."
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Unexpected error occurred",
+						"content": {
+							"application/json": {}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"PDG"
+				],
+				"summary": "Deletes a PDG resource",
+				"description": "Deletes a PDG resource with given UUID.",
+				"operationId": "deletePdg",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "The PDG was deleted."
+					}
+				}
+			}
+		},
+		"/v1/tubing": {
+			"get": {
+				"tags": [
+					"Tubing"
+				],
+				"summary": "Retrieves all Tubings",
+				"description": "Retrieves all Tubing resources in a list.",
+				"operationId": "listTubing",
+				"responses": {
+					"200": {
+						"description": "The list of Tubings was retrieved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Tubing"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Tubing"
+				],
+				"summary": "Creates a Tubing resource",
+				"description": "Sends a post request, validates input data, and saves the generated resource into the Scylla database.",
+				"operationId": "createTubing",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TubingRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Tubing resource was created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Tubing"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "The request failed validation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Field name: must not be null"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Unexpected error occurred",
+						"content": {
+							"application/json": {}
+						}
+					}
+				}
+			}
+		},
+		"/v1/temperature": {
+			"get": {
+				"tags": [
+					"Temperature"
+				],
+				"summary": "Retrieves all temperature resources.",
+				"description": "Retrieves all temperature resources in a list.",
+				"operationId": "listTemperature",
+				"responses": {
+					"200": {
+						"description": "The list of temperature resources was retrieved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Temperature"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/temperature/{id}": {
+			"get": {
+				"tags": [
+					"Temperature"
+				],
+				"summary": "Retrieves all temperature resources by UUID.",
+				"description": "Retrieves all temperature resources in a list, filtered by UUID. Start date and time can also be used as optional filtering parameters.",
+				"operationId": "getTemperature",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "startDateTime",
+						"in": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "endDateTime",
+						"in": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The list of temperature resources was retrieved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Temperature"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "The request failed validation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Invalid UUID string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/pressure": {
+			"get": {
+				"tags": [
+					"Pressure"
+				],
+				"summary": "Retrieves all pressure resources.",
+				"description": "Retrieves all pressure resources in a list.",
+				"operationId": "listPressure",
+				"responses": {
+					"200": {
+						"description": "The list of pressure resources was retrieved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Pressure"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/pressure/{id}": {
+			"get": {
+				"tags": [
+					"Pressure"
+				],
+				"summary": "Retrieves all pressure resources by UUID.",
+				"description": "Retrieves all pressure resources in a list, filtered by UUID. Start date and time can also be used as optional filtering parameters.",
+				"operationId": "getPressure",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "startDateTime",
+						"in": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "endDateTime",
+						"in": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The list of pressure resources was retrieved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Pressure"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "The request failed validation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Invalid UUID string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/pdg": {
+			"get": {
+				"tags": [
+					"PDG"
+				],
+				"summary": "Retrieves all PDGs.",
+				"description": "Retrieves all PDG resources in a list.",
+				"operationId": "listPdg",
+				"responses": {
+					"200": {
+						"description": "The list of PDGs was retrieved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Pdg"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/measure": {
+			"get": {
+				"tags": [
+					"Custom Measure"
+				],
+				"summary": "Retrieves all custom measures.",
+				"description": "Retrieves all custom measure resources in a list.",
+				"operationId": "listMeasures",
+				"responses": {
+					"200": {
+						"description": "The list of custom measures was retrieved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/CustomMeasure"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/measure/{id}": {
+			"get": {
+				"tags": [
+					"Custom Measure"
+				],
+				"summary": "Retrieves a custom measure.",
+				"description": "Retrieves a custom measure resource with a given UUID.",
+				"operationId": "getMeasure",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The custom measure was retrieved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/CustomMeasure"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "The request failed validation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Invalid UUID string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/measure/{id}/property/{propertyName}": {
+			"get": {
+				"tags": [
+					"Custom Measure"
+				],
+				"summary": "Retrieves all custom measures by property.",
+				"description": "Retrieves all custom measure resources in a list, filtered by UUID and a given property name. Start date and time can also be used as optional filtering parameters.",
+				"operationId": "getMeasureByProperty",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "propertyName",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "startDateTime",
+						"in": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "endDateTime",
+						"in": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The list of custom measures was retrieved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/CustomMeasure"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "The request failed validation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "Invalid UUID string"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Tubing": {
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"properties": {
+					"tubingId": {
+						"type": "string",
+						"description": "The virtual Tubing unique identifier",
+						"format": "uuid",
+						"example": "ccf9e52b-e2e4-45d8-8884-0721d3246a53"
+					},
+					"name": {
+						"type": "string",
+						"description": "The name of the Tubing resource",
+						"example": "Tubing #1"
+					},
+					"tubingInfo": {
+						"type": "string",
+						"description": "Additional information for Tubing resource",
+						"example": "Additional info"
+					},
+					"pdgIdList": {
+						"type": "array",
+						"description": "List of associated PDGs with respective tubing resource",
+						"items": {
+							"type": "string",
+							"description": "List of associated PDGs with respective tubing resource",
+							"format": "uuid"
+						}
+					},
+					"icvValveIsOpen": {
+						"type": "boolean",
+						"description": "ICV Valve open (true) or closed (false) status",
+						"default": false
+					},
+					"creationDateTime": {
+						"type": "string",
+						"description": "Resource creation date and time",
+						"format": "date-time"
+					}
+				},
+				"description": "Tubing resource"
+			},
+			"TubingRequest": {
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"tubingInfo": {
+						"type": "string"
+					},
+					"icvValveIsOpen": {
+						"type": "boolean"
+					}
+				}
+			},
+			"Pdg": {
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"properties": {
+					"pdgId": {
+						"type": "string",
+						"description": "The virtual PDG unique identifier",
+						"format": "uuid",
+						"example": "ccf9e52b-e2e4-45d8-8884-0721d3246a53"
+					},
+					"tubingId": {
+						"type": "string",
+						"description": "The virtual Tubing unique identifier",
+						"format": "uuid",
+						"example": "ccf9e52b-e2e4-45d8-8884-0721d3246a53"
+					},
+					"name": {
+						"type": "string",
+						"description": "The name of the PDG resource",
+						"example": "PDG #1"
+					},
+					"pdgInfo": {
+						"type": "string",
+						"description": "Additional information for PDG resource",
+						"example": "Additional info"
+					},
+					"creationDateTime": {
+						"type": "string",
+						"description": "Resource creation date and time",
+						"format": "date-time"
+					}
+				},
+				"description": "PDG resource"
+			},
+			"PdgRequest": {
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"pdgInfo": {
+						"type": "string"
+					}
+				}
+			},
+			"Temperature": {
+				"type": "object",
+				"properties": {
+					"componentId": {
+						"type": "string",
+						"description": "The virtual Tubing / PDG unique identifier",
+						"format": "uuid",
+						"example": "ccf9e52b-e2e4-45d8-8884-0721d3246a53"
+					},
+					"timestamp": {
+						"type": "string",
+						"description": "Data generation timestamp",
+						"format": "date-time"
+					},
+					"value": {
+						"type": "string",
+						"description": "Measured value",
+						"example": "36.2421"
+					}
+				},
+				"description": "Temperature resource"
+			},
+			"Pressure": {
+				"type": "object",
+				"properties": {
+					"componentId": {
+						"type": "string",
+						"description": "The virtual Tubing / PDG unique identifier",
+						"format": "uuid",
+						"example": "ccf9e52b-e2e4-45d8-8884-0721d3246a53"
+					},
+					"timestamp": {
+						"type": "string",
+						"description": "Data generation timestamp",
+						"format": "date-time"
+					},
+					"value": {
+						"type": "string",
+						"description": "Measured value",
+						"example": "36.2421"
+					}
+				},
+				"description": "Pressure resource"
+			},
+			"CustomMeasure": {
+				"type": "object",
+				"properties": {
+					"tubingId": {
+						"type": "string",
+						"description": "The virtual Tubing / PDG unique identifier",
+						"format": "uuid",
+						"example": "ccf9e52b-e2e4-45d8-8884-0721d3246a53"
+					},
+					"propertyType": {
+						"type": "string",
+						"description": "Name of the custom measure property",
+						"example": "Density"
+					},
+					"timestamp": {
+						"type": "string",
+						"description": "Data generation timestamp",
+						"format": "date-time"
+					},
+					"value": {
+						"type": "string",
+						"description": "Measured value",
+						"example": "36.2421"
+					}
+				},
+				"description": "Custom Measure resource"
+			}
+		}
+	}
+}
